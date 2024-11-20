@@ -1,0 +1,11 @@
+---
+# vars/vault.yml
+test_satellite_server_url: https://your-test-satellite-url
+test_satellite_username: your_test_username
+test_satellite_password: your_test_password
+
+prod_satellite_server_url: https://your-prod-satellite-url
+prod_satellite_username: your_prod_username
+prod_satellite_password: your_prod_password
+
+satellite_validate_certs: false  # Set to true if using valid SSL certificates

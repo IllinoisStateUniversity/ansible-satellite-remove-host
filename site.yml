@@ -1,0 +1,36 @@
+---
+- name: Satellite - Remove Host
+  hosts: "{{ survey_hostname | default(survey_hosts) }}"
+  gather_facts: true
+
+  vars_files:
+    - vars/vault.yml
+  vars:
+    host_to_remove: "{{ ansible_fqdn | lower }}"
+
+  tasks:
+    - name: Remove Host from Satellite Test
+      redhat.satellite.host:
+        server_url: "{{ test_satellite_server_url }}"
+        username: "{{ test_satellite_username }}"
+        password: "{{ test_satellite_password }}"
+        validate_certs: "{{ satellite_validate_certs }}"
+        name: "{{ host_to_remove }}"
+        state: absent
+      delegate_to: localhost
+      tags:
+        - test
+        - never
+
+    - name: Remove Host from Satellite Prod
+      redhat.satellite.host:
+        server_url: "{{ prod_satellite_server_url }}"
+        username: "{{ prod_satellite_username }}"
+        password: "{{ prod_satellite_password }}"
+        validate_certs: "{{ satellite_validate_certs }}"
+        name: "{{ host_to_remove }}"
+        state: absent
+      delegate_to: localhost
+      tags:
+        - prod
+        - never
